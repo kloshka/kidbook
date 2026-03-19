@@ -96,6 +96,7 @@ graph TD
 
 SPARQL-запросы сохранены в папке `sparql`.
 
+
 ## Автоматизация
 
 ### Генерация черновиков через LLM API
@@ -141,7 +142,7 @@ python WORK/6_1_reasonable_spending/src/build_glossary.py
 ## Структура артефактов этой группы
 - `WORK/6_1_reasonable_spending/README.md` - отчет группы
 - `WORK/6_1_reasonable_spending/concepts.json` - словарь понятий
-- `WORK/6_1_reasonable_spending/sparql/` - запросы и результаты
+- `WORK/6_1_reasonable_spending/sparql/` - SPARQL-запросы к WikiData и DBpedia
 - `WORK/6_1_reasonable_spending/raw_data/` - узлы и связи онтологии
 - `WORK/6_1_reasonable_spending/src/` - автоматизация
 - `WORK/6_1_reasonable_spending/llm_prompts.md` - шаблоны промптов
