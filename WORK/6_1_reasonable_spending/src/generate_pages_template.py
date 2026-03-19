@@ -4,8 +4,8 @@ from pathlib import Path
 from urllib import request as urllib_request
 from urllib.error import HTTPError, URLError
 
-# Generic API script template for LLM text generation.
-# You can adapt this to YandexGPT, GigaChat or another compatible endpoint.
+# Скрипт генерации черновиков статей через совместимый LLM endpoint.
+# Перед публикацией тексты обязательно проходят ручную вычитку команды.
 
 ROOT = Path(__file__).resolve().parents[3]
 CONCEPTS_PATH = ROOT / "WORK" / "6_1_reasonable_spending" / "concepts.json"
@@ -13,7 +13,7 @@ OUTPUT_DIR = ROOT / "WEB" / "6_1_reasonable_spending" / "articles"
 
 LLM_API_URL = os.getenv("LLM_API_URL", "")
 LLM_API_KEY = os.getenv("LLM_API_KEY", "")
-MODEL_NAME = os.getenv("LLM_MODEL", "gpt-like-model")
+MODEL_NAME = os.getenv("LLM_MODEL", "model-name")
 
 SYSTEM_PROMPT = (
     "Ты пишешь детскую энциклопедию. Пиши просто, доброжелательно и точно. "
@@ -88,7 +88,7 @@ def main():
     concepts = load_concepts()
 
     for concept in concepts:
-        file_path = OUTPUT_DIR / concept["file"]
+        file_path = OUTPUT_DIR / Path(concept["file"]).name
         if file_path.exists():
             # Skip existing files to avoid accidental overwrite.
             continue

@@ -18,7 +18,8 @@ def main():
     ]
 
     for c in concepts:
-        lines.append(f"- [{c['name']}](./articles/{c['file']})")
+        article_name = Path(c["file"]).name
+        lines.append(f"- [{c['name']}](./articles/{article_name})")
 
     OUTPUT_PATH.write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(f"Glossary created: {OUTPUT_PATH}")

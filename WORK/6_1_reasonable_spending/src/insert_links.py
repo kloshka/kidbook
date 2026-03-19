@@ -11,10 +11,11 @@ def load_concepts():
     data = json.loads(CONCEPTS_PATH.read_text(encoding="utf-8"))
     concepts = []
     for c in data["concepts"]:
+        article_name = Path(c["file"]).name
         concepts.append(
             {
                 "name": c["name"],
-                "file": c["file"],
+                "file": article_name,
                 "aliases": sorted(c["aliases"], key=len, reverse=True),
             }
         )
