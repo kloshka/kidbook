@@ -2,31 +2,25 @@
 
 Endpoint: https://dbpedia.org/sparql
 
-## 1) Понятия, связанные с personal finance
-```sparql
-PREFIX dct: <http://purl.org/dc/terms/>
-PREFIX dbo: <http://dbpedia.org/ontology/>
-
-SELECT ?resource ?label ?abstract WHERE {
-  ?resource dct:subject <http://dbpedia.org/resource/Category:Personal_finance> ;
-            rdfs:label ?label ;
-            dbo:abstract ?abstract .
-  FILTER (lang(?label) = "en")
-  FILTER (lang(?abstract) = "en")
-}
-LIMIT 50
-```
-
-## 2) Иерархия категорий про финансовую грамотность
+## 1) Иерархия категорий про финансовую грамотность
 ```sparql
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT ?cat ?catLabel ?broader ?broaderLabel WHERE {
+SELECT DISTINCT ?cat ?catLabel ?broader ?broaderLabel WHERE {
   ?cat skos:broader ?broader ;
        rdfs:label ?catLabel .
   ?broader rdfs:label ?broaderLabel .
-  FILTER(CONTAINS(LCASE(STR(?catLabel)), "finance"))
+
   FILTER(lang(?catLabel) = "en" && lang(?broaderLabel) = "en")
+
+  FILTER(
+    ?cat = <http://dbpedia.org/resource/Category:Personal_finance> ||
+    ?broader = <http://dbpedia.org/resource/Category:Personal_finance>
+  )
+
+  FILTER(!REGEX(LCASE(STR(?catLabel)), "minister|country|journal|history|continent|asia"))
+  FILTER(!REGEX(LCASE(STR(?broaderLabel)), "minister|country|journal|history|continent|asia"))
 }
 LIMIT 100
 ```
